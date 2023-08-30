@@ -1,6 +1,9 @@
 import React from "react";
-import { DummyData } from "../interface/interface";
-const DUMMY_DATA: DummyData[] = [
+import { MeetupData } from "../interface/interface";
+import MeetupList from "../components/meetups/MeetupList";
+import { Title } from "../ui/styles";
+
+const DUMMY_DATA: MeetupData[] = [
   {
     id: "m1",
     title: "This is a first meetup",
@@ -24,13 +27,10 @@ const DUMMY_DATA: DummyData[] = [
 const AllMeetupsPage: React.FC = () => {
   return (
     <section>
-      <h1>All Meetups</h1>
-      <ul></ul>
-      {DUMMY_DATA.map((meetup) => {
-        return <li key={meetup.id}>
-            <h2>{meetup.title}</h2>
-        </li>;
-      })}
+      <Title>All Meetups</Title>
+        {
+          <MeetupList items={DUMMY_DATA} />
+        }
     </section>
   );
 };

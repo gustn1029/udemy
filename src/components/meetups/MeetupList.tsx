@@ -1,9 +1,23 @@
 import React from 'react';
+import { MeetupArray } from '../../interface/interface';
+import MeetupsItem from './MeetupsItem';
 
-const MeetupsList:React.FC = () => {
+const MeetupList:React.FC<MeetupArray> = ({items}) => {
     return (
-        <div></div>
-    );
-};
+        <ul>
+            {
+                items.map(item => (
+                    <MeetupsItem 
+                        id={item.id} key={item.id}
+                        title={item.title}
+                        address={item.address}
+                        description={item.description}
+                        image={item.image}
+                    />
+                ))
+            }
+        </ul>
+    )
+}  
 
-export default MeetupsList;
+export default MeetupList;

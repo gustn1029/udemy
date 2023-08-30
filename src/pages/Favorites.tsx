@@ -1,8 +1,11 @@
 import React from 'react';
+import { Title } from '../ui/styles';
 
 const FavoritesPage:React.FC = () => {
     return (
-        <div>Favorites Page</div>
+        <section>
+            <Title>Favorites Page</Title>
+        </section>
     )
 }
 
