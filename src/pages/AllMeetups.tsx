@@ -1,36 +1,49 @@
 import React from "react";
-import { MeetupData } from "../interface/interface";
+import { useState, useEffect } from "react";
 import MeetupList from "../components/meetups/MeetupList";
 import { Title } from "../ui/styles";
+import { MeetupData } from "../interface/interface";
 
-const DUMMY_DATA: MeetupData[] = [
-  {
-    id: "m1",
-    title: "This is a first meetup",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/2560px-Stadtbild_M%C3%BCnchen.jpg",
-    address: "Meetupstreet 5, 12345 Meetup City",
-    description:
-      "This is a first, amazing meetup which you definitely should not miss. It will be a lot of fun!",
-  },
-  {
-    id: "m2",
-    title: "This is a second meetup",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/2560px-Stadtbild_M%C3%BCnchen.jpg",
-    address: "Meetupstreet 5, 12345 Meetup City",
-    description:
-      "This is a first, amazing meetup which you definitely should not miss. It will be a lot of fun!",
-  },
-];
+const AllMeetupsPage = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [loadedMeetups, setLoadedMeetups] = useState<Array<MeetupData>>([]);
 
-const AllMeetupsPage: React.FC = () => {
+  useEffect(()=>{
+    setIsLoading(true);
+    fetch(
+      "https://react-getting-started-b3375-default-rtdb.firebaseio.com/meetups.json"
+    ).then((response) => {
+      return response.json();
+    }).then((data) => {
+      const meetups = [];
+
+      for (const key in data) {
+        const meetup = {
+          id: key,
+          ...data[key]
+        };
+
+        meetups.push(meetup);
+      }
+
+      setIsLoading(false);
+      setLoadedMeetups(meetups);
+      console.log(loadedMeetups);
+    });
+  }, []);
+
+  if(isLoading) {
+    return (
+      <section className="fixed left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%]">
+        <p className="animate-bounce text-2xl uppercase font-bold">Loading...</p>
+      </section>
+    )
+  }
+
   return (
     <section>
       <Title>All Meetups</Title>
-        {
-          <MeetupList items={DUMMY_DATA} />
-        }
+      {<MeetupList items={loadedMeetups} />}
     </section>
   );
 };

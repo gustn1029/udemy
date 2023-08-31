@@ -1,6 +1,8 @@
 import React from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { MenuList } from '../../interface/interface';
+import FavoritesContext from '../../store/favorites-context';
 
 
 const menuList: MenuList[] = [
@@ -10,6 +12,7 @@ const menuList: MenuList[] = [
 ];
 
 const MainNavigation:React.FC = () => {
+    const favoritesCtx = useContext(FavoritesContext);
     return (
         <header className='w-full px-24 bg-rose-900 py-8 flex justify-between items-center'>
             <section className='text-2xl font-bold text-gray-50'>React Meetups</section>
@@ -22,7 +25,7 @@ const MainNavigation:React.FC = () => {
                                     <Link to={item.path}
                                         className='text-gray-300 text-lg font-semibold ml-12 hover:text-gray-50'
                                     >
-                                        {item.title}
+                                        {item.path === '/favorite'? `${item.title}(${favoritesCtx.totalFavorites})` :item.title}
                                     </Link>
                                 </li>
                             );

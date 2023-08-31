@@ -1,4 +1,3 @@
-import MeetupsItem from "../components/meetups/MeetupsItem";
 
 export interface BtnEvent {
     cancel?: ()=> void;
@@ -21,4 +20,15 @@ export interface MeetupData {
 
 export interface MeetupArray {
     items: MeetupData[]
+}
+
+export interface MeetupFormData {
+    title: string,
+    image: string,
+    address: string,
+    description: string
+}
+
+export interface OnAddMeetup {
+    addMeetup: (data:MeetupFormData) => void;
 }
